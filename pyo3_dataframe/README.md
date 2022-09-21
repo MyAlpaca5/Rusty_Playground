@@ -12,7 +12,7 @@ examples/pyo3_dataframe
 ├── python
 │   └── pyo3_dataframe
 └── src
-    └── pyo3_dataframe
+    └── query_handler
 ```
 `python/pyo3_dataframe` stores all python code
 
