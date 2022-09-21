@@ -1,0 +1,7 @@
+maturin[patchelf]==0.13.3
+plotly==5.10.0
+ipywidgets==7.7.1
+jupyter==1.0.0
+pandas==1.4.4
+pyarrow==9.0.0
+polars==0.14.11

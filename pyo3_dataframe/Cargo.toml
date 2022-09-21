@@ -1,0 +1,16 @@
+[package]
+name = "pyo3_dataframe"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "pyo3_dataframe"
+crate-type = ["cdylib"]
+
+[dependencies]
+log = "0.4.14"
+# jemallocator = "0.3.2"
+polars = { version = "0.23.2", features = ["serde"] }
+serde_json = "1.0.85"
+pyo3 = { version = "0.17.1", features = ["extension-module", "abi3-py37"] }
+rand = "0.8.5"
