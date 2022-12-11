@@ -1,26 +1,15 @@
-## Pyo3 Dataframe
-Explore using maturin to generate Python package from Rust. Just like many python package integrate with C to improve performance, like numpy, Rust could do the same thing using maturin and pyo3.
+# PyO3 Dataframe
+Explore using `maturin` to transform Rust functions into Python package. Just like many Python package using C to improve performance, such as `numpy`, Rust could do the same thing using `maturin` and `pyo3`.
 
+This solution uses a MPSC channel in Rust to communicate between Rust and Python. Rust part will start the computation in a new thread, and then create the channel and wrap the Receiver part of the channel into a Python iterator before returning the iterator back to Python. Python part will just read from the iterator till the underline channel were closed.
 
-## Prerequisite
-- Python 3.8+
-- Rust 1.60+
+# Prerequisite
+- Python 3.10 (3.11 may not work)
+- Rust 1.65
 
-## Folder Structure
-```
-examples/pyo3_dataframe
-├── python
-│   └── pyo3_dataframe
-└── src
-    └── query_handler
-```
-`python/pyo3_dataframe` stores all python code
-
-`src/*` stores all rust code
-
-## Setup
+# Setup
 0. (Optional) Enable your Python virtual environment
-1. Install required Python packages, run `pip3 install -r ./python/pyo3_dataframe/requirements.txt`
+1. Install required Python packages, run `pip3 install -r ./python/requirements.txt`
 2. Build Python package from Rust, run `maturin develop --release`
-3. Open `python/pyo3_dataframe/main.ipynb` to explore
+3. Open `./python/main.ipynb` to explore
     - make sure to select correct kernel in Jupyter Notebook

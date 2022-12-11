@@ -6,6 +6,7 @@ use std::sync::mpsc::{Receiver, Sender};
 #[pyclass]
 pub struct ResultConsumer(pub Receiver<String>);
 
+// implement a python iterator
 #[pymethods]
 impl ResultConsumer {
     fn __iter__(slf: PyRef<'_, Self>) -> PyRef<'_, Self> {
