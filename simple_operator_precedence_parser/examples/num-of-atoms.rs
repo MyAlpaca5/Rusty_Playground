@@ -86,17 +86,18 @@ impl Lexer {
 
 fn expr(input: String) -> String {
     let mut lexer = Lexer::new(&input);
-    let map = expr_helper(&mut lexer);
-    map.into_iter()
+    let counter = expr_helper(&mut lexer);
+    counter.into_iter()
         .map(|(k, v)| if v > 1 { format!("{}{}", k, v) } else { k })
         .collect()
 }
 
-// because this is only one operator, the postfix Count,
+// because there is only one operator, the postfix Count,
 // we don't need the bp parameter or specify the bp for Count,
-// it will always has larger bp
+// it will always have larger bp
 fn expr_helper(lexer: &mut Lexer) -> BTreeMap<String, u32> {
     let mut lhs = match lexer.next() {
+        // for a new level, we can have two types of openner
         Token::OP => {
             let lhs = expr_helper(lexer);
             assert_eq!(lexer.next(), Token::CP);
@@ -110,6 +111,11 @@ fn expr_helper(lexer: &mut Lexer) -> BTreeMap<String, u32> {
         match lexer.peek() {
             Token::Eof | Token::CP => break,
             Token::Elem(_) | Token::OP => {
+                // Because we don't have 1 in the formula (meaning one element),
+                // we could have two element tokens adjcent to each other.
+                // For this kind of scenario, we think the lhs expression is finished,
+                // and start a new lhs by recursively calling the expr_bp function.
+                // This behave the same as encountering a opening parenthsis.
                 let rhs = expr_helper(lexer);
                 for (k, v) in rhs {
                     lhs.entry(k).and_modify(|vv| *vv += v).or_insert(v);
