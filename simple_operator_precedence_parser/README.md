@@ -8,4 +8,8 @@ https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html
 
 https://matklad.github.io/2020/04/15/from-pratt-to-dijkstra.html
 
-https://github.com/segeljakt/pratt
+https://www.engr.mun.ca/~theo/Misc/exp_parsing.htm
+
+https://www.engr.mun.ca/~theo/Misc/pratt_parsing.htm
+
+https://journal.stuffwithstuff.com/2011/03/19/pratt-parsers-expression-parsing-made-easy/
