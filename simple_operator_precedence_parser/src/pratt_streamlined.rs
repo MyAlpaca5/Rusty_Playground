@@ -53,7 +53,7 @@ pub fn expr(input: &str) -> S {
     expr_bp(&mut lexer, 0).unwrap()
 }
 
-fn expr_bp(lexer: &mut Lexer, min_bp: u8) -> Option<S> {
+fn expr_bp(lexer: &mut Lexer, bp: u8) -> Option<S> {
     let mut lhs = None;
 
     loop {
@@ -63,13 +63,13 @@ fn expr_bp(lexer: &mut Lexer, min_bp: u8) -> Option<S> {
         };
 
         let r_bp = match binding_power(token, lhs.is_none()) {
-            Some((l_bp, r_bp)) if min_bp <= l_bp => r_bp,
+            Some((l_bp, r_bp)) if bp <= l_bp => r_bp,
             _ => return lhs,
         };
         lexer.next();
 
         let rhs = expr_bp(lexer, r_bp);
-        // cannot add a binding power for ) as in shunting_yard, because if it can be matched in the
+        // cannot add a binding power for ) as in shunting_yard. If it can be matched in the
         // binding_power(), it will be remove from the Lexer, because of lexer.next(). Therefore, when
         // you come back from the recursion, the following assert_eq will fail, because lexer.next() will
         // not return ).
@@ -89,14 +89,14 @@ fn expr_bp(lexer: &mut Lexer, min_bp: u8) -> Option<S> {
 
 fn binding_power(op: char, is_prefix: bool) -> Option<(u8, u8)> {
     let res = match op {
-        '0'..='9' | 'a'..='z' | 'A'..='Z' => (99, 100),
         '(' => (99, 0),
         '=' => (2, 1),
-        '+' | '-' if is_prefix => (99, 9),
-        '+' | '-' => (5, 6),
-        '*' | '/' => (7, 8),
-        '!' => (11, 100),
-        '.' => (14, 13),
+        '+' | '-' if is_prefix => (99, 7),
+        '+' | '-' => (3, 4),
+        '*' | '/' => (5, 6),
+        '!' => (9, 100),
+        '.' => (12, 11),
+        '0'..='9' | 'a'..='z' | 'A'..='Z' => (99, 100),
         _ => return None,
     };
     Some(res)

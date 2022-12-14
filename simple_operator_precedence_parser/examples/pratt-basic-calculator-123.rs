@@ -38,11 +38,11 @@ impl Lexer {
         while let Some(c) = chars.next() {
             match c {
                 '0'..='9' => {
-                    let mut num = c as i32 - '0' as i32;
+                    let mut val = c as i32 - '0' as i32;
                     while matches!(chars.peek(), Some('0'..='9')) {
-                        num = num * 10 + chars.next().unwrap().to_digit(10).unwrap() as i32;
+                        val = val * 10 + chars.next().unwrap().to_digit(10).unwrap() as i32;
                     }
-                    tokens.push(Token::Int(num));
+                    tokens.push(Token::Int(val));
                 }
                 _ => {
                     tokens.push(Token::Op(c));
